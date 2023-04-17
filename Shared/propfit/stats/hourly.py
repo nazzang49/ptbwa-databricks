@@ -84,8 +84,8 @@ WITH
                     tid -- transaction Id
             FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY tid ORDER BY actiontime_local) AS rn
                         FROM ice.streams_bid_bronze_app_nhn
-                        WHERE DATE(actiontime_local) = '{criteria_date}'
-                        AND HOUR(actiontime_local) = '{criteria_hour}')
+                        WHERE actiontime_date = '{criteria_date}'
+                        AND actiontime_hour = '{criteria_hour}')
             WHERE rn = 1
     ),
     imp AS (
@@ -108,8 +108,8 @@ WITH
                     tid
             FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY tid ORDER BY actiontime_local) AS rn
                         FROM ice.streams_imp_bronze_app_nhn
-                        WHERE DATE(actiontime_local) = '{criteria_date}'
-                        AND HOUR(actiontime_local) = '{criteria_hour}')
+                        WHERE actiontime_date = '{criteria_date}'
+                        AND actiontime_hour = '{criteria_hour}')
             WHERE rn = 1
     ),
     clk AS (
@@ -131,8 +131,8 @@ WITH
                     tid
             FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY tid ORDER BY actiontime_local) AS rn
                         FROM ice.streams_clk_bronze_app_nhn
-                        WHERE DATE(actiontime_local) = '{criteria_date}'
-                        AND HOUR(actiontime_local) = '{criteria_hour}')
+                        WHERE actiontime_date = '{criteria_date}'
+                        AND actiontime_hour = '{criteria_hour}')
             WHERE rn = 1
     ),
 
@@ -261,7 +261,7 @@ spark.sql(f"DELETE FROM cream.propfit_hourly WHERE date_format(date, 'yyyy-MM-dd
 
 # COMMAND ----------
 
-df.unpersist()
+# df.unpersist()
 
 # COMMAND ----------
 

@@ -61,7 +61,7 @@ diff_minute
 
 # COMMAND ----------
 
-criteria_time
+criteria_date
 
 # COMMAND ----------
 
@@ -95,8 +95,8 @@ WITH
 						COUNT(*) AS bid
 				FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY tid ORDER BY actiontime_local) AS rn
 							FROM ice.streams_bid_bronze_app_nhn
-							WHERE DATE(actiontime_local) = '{criteria_date}'
-							AND HOUR(actiontime_local) = '{criteria_hour}'
+							WHERE actiontime_date = '{criteria_date}'
+							AND actiontime_hour = '{criteria_hour}'
 							AND FLOOR(MINUTE(actiontime_local) / 5) * 5 = '{criteria_minute}')
 				WHERE rn = 1
 				GROUP BY PubId, url, ad_cam, ad_grp, Width, Height, InventoryIdx, Date, AdExchangeTypes, ad_adv
@@ -117,8 +117,8 @@ WITH
 						SUM(BidStream.win_price) AS Revenue
 				FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY tid ORDER BY actiontime_local) AS rn
 							FROM ice.streams_imp_bronze_app_nhn
-							WHERE DATE(actiontime_local) = '{criteria_date}'
-							AND HOUR(actiontime_local) = '{criteria_hour}'
+							WHERE actiontime_date = '{criteria_date}'
+							AND actiontime_hour = '{criteria_hour}'
 							AND FLOOR(MINUTE(actiontime_local) / 5) * 5 = '{criteria_minute}')
 				WHERE rn = 1
 				GROUP BY PubId, url, ad_cam, ad_grp, Width, Height, InventoryIdx, Date, AdExchangeTypes, ad_adv
@@ -138,8 +138,8 @@ WITH
 						COUNT(*) AS clk
 				FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY tid ORDER BY actiontime_local) AS rn
 							FROM ice.streams_clk_bronze_app_nhn
-							WHERE DATE(actiontime_local) = '{criteria_date}'
-							AND HOUR(actiontime_local) = '{criteria_hour}'
+							WHERE actiontime_date = '{criteria_date}'
+							AND actiontime_hour = '{criteria_hour}'
 							AND FLOOR(MINUTE(actiontime_local) / 5) * 5 = '{criteria_minute}')
 				WHERE rn = 1
 				GROUP BY PubId, url, ad_cam, ad_grp, Width, Height, InventoryIdx, Date, AdExchangeTypes, ad_adv
@@ -194,11 +194,11 @@ df = spark.sql(query)
 
 # COMMAND ----------
 
-df.cache()
+# df.display()
 
 # COMMAND ----------
 
-# df.show(5)
+# df.cache()
 
 # COMMAND ----------
 
@@ -243,7 +243,7 @@ spark.sql(f"DELETE FROM cream.propfit_minutes WHERE date_format(date, 'yyyy-MM-d
 
 # COMMAND ----------
 
-df.unpersist()
+# df.unpersist()
 
 # COMMAND ----------
 
