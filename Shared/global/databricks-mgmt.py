@@ -188,9 +188,9 @@ class DatabricksAPIManager:
     
     def __init__(self, *args, **kwargs):
         # (!) required
-        self._pat = kwargs["pat"] if "pat" in kwargs else "dapid2c8a4505f353f5545bb25350b1eb9da" # jyp
+        self._pat = kwargs["pat"] if "pat" in kwargs else "{PAT}" # jyp
         self._api_type = kwargs["api_type"] if "api_type" in kwargs else "workspace"
-        self._base_url = kwargs["base_url"] if "base_url" in kwargs else "https://dbc-024ee768-9ab2.cloud.databricks.com/api"
+        self._base_url = kwargs["base_url"] if "base_url" in kwargs else "{cluster_url}/api"
         self._api_version = kwargs["api_version"] if "api_version" in kwargs else "2.1"
         self._rest_type = kwargs["rest_type"] if "rest_type" in kwargs else "get"
         self._params = kwargs["params"] if "params" in kwargs else {}
@@ -683,7 +683,7 @@ jobs
 
 response = requests.get(
     url="https://dbc-024ee768-9ab2.cloud.databricks.com/api/2.1/jobs/get", 
-    headers={"Authorization": f"Bearer dapid2c8a4505f353f5545bb25350b1eb9da"}, 
+    headers={"Authorization": "Bearer {PAT}"}, 
     params={
         "job_id": "1017170494348786"
     }
@@ -1161,19 +1161,6 @@ results = databricks_sql_manager.do_queries(
 # MAGIC 
 # MAGIC #### Create Package
 # MAGIC - Required Process Shell Script
-
-# COMMAND ----------
-
-# script = """
-# #!/bin/bash
-# cp /dbfs/mnt/ptbwa-basic/tbwa_custommodule/date_function.py /databricks/python3/lib/python3.8/site-packages/date_function.py
-# cp /dbfs/mnt/ptbwa-basic/tbwa_custommodule/etc_function.py /databricks/python3/lib/python3.8/site-packages/etc_function.py
-# cp /dbfs/mnt/ptbwa-basic/tbwa_custommodule/func1.py /databricks/python3/lib/python3.8/site-packages/func1.py
-# cp /dbfs/mnt/ptbwa-basic/tbwa_custommodule/mysql_function.py /databricks/python3/lib/python3.8/site-packages/mysql_function.py
-# cp /dbfs/mnt/ptbwa-basic/tbwa_custommodule/s3_function.py /databricks/python3/lib/python3.8/site-packages/s3_function.py
-# cp /dbfs/mnt/ptbwa-basic/tbwa_custommodule/ptbwa_utils.py /databricks/python3/lib/python3.8/site-packages/ptbwa_utils.py
-# cp /dbfs/mnt/ptbwa-basic/tbwa_custommodule/databricks_mgmt.py /databricks/python3/lib/python3.8/site-packages/databricks_mgmt.py
-# """
 
 # COMMAND ----------
 
