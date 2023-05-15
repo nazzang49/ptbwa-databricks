@@ -239,7 +239,6 @@ class MyUtils:
 # MAGIC %md 
 # MAGIC 
 # MAGIC #### Load Dataset based on Baseline
-# MAGIC - [Baseline Notebook](https://dbc-024ee768-9ab2.cloud.databricks.com/?o=2776940675122529#notebook/2416970997867031/command/2416970997867036)
 # MAGIC - DataTypes
 # MAGIC   - Propfit
 # MAGIC   - TG360
